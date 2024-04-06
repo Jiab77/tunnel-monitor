@@ -1,2 +1,3 @@
-# tunnel-monitor
-Just a basic script that creates a tunnel and relaunch it in case its going down unexpectedly.
+# Tunnel Monitor
+
+Just a basic script that creates a tunnel with a given provider and relaunch it when its going down unexpectedly.
