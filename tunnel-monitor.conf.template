@@ -1,0 +1,22 @@
+# Config
+CLEAR_SCREEN=true
+ENABLE_SVC_CHECK=true
+ENABLE_SVC_KILL=true
+KILL_CHECK_THRES=10
+WAIT_DELAY_LOOP=30
+WAIT_DELAY_PRECHECK=5
+WAIT_DELAY_CHECK=5
+CURL_TIMEOUT=5
+
+# Credentials
+SVC_USER="admin"
+SVC_PASS="changeme"
+
+# Provider
+SVC_PROVIDER="loophole"
+
+# Init
+SVC_PORT=8080
+TUN_NAME="tunnel"
+SVC_NAME="$USER"
+SVC_DOMAIN="loophole.site"
