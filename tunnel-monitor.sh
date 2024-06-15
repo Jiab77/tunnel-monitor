@@ -7,7 +7,7 @@
 # but later on has been adapted for the 'loophole' service
 # for performances reasons.
 #
-# Version 0.0.0
+# Version 0.0.1
 
 # Options
 [[ -r $HOME/.debug ]] && set -o xtrace || set +o xtrace
@@ -48,6 +48,7 @@ function print_usage() {
   echo -e "\nUsage: $SCRIPT_FILE [flags] [port] [name] [sub-domain] [domain]"
   echo -e "\nFlags:"
   echo -e "  -h | --help\t\tPrint this message and exit"
+  echo -e "  -b | --bin\ŧ\tSet 'BIN_SVC' to the given path"
   echo -e "  -c | --config\t\tLoad config from given file"
   echo -e "  -t | --target\t\tCreate tunnel from remote host"
   echo
@@ -137,21 +138,22 @@ function run_monitor() {
   done
 }
 
+# Flags
+while [[ $# -ne 0 ]]; do
+  case $1 in
+    -h|--help) print_usage ;;
+    -b|--bin) shift ; BIN_SVC="$1" ; shift ;;
+    -c|--config) shift ; CONFIG_FILE="$1" ; shift ;;
+    -t|--target) MAP_TO_REMOTE_HOST=true ; shift ; REMOTE_HOST="$1" ; shift ;;
+    *) die "Unsupported argument given: $*" ;;
+  esac
+done
+
 # Checks
 [[ -z $BIN_SVC ]] && die "You must have 'BIN_SVC' variable defined to run this script."
 [[ -z $BIN_SCREEN ]] && die "You must have 'screen' installed to run this script."
 [[ ! -r $BIN_SVC ]] && die "You must have 'loophole' installed to run this script."
 [[ ! -x $BIN_SVC ]] && die "The 'loophole' binary permissions are invalid, please fix them and try again."
-
-# Flags
-[[ $1 == "-h" || $1 == "--help" ]] && print_usage
-[[ $1 == "-c" || $1 == "--config" ]] && shift && CONFIG_FILE="$1" && shift
-if [[ $1 == "-t" || $1 == "--target" ]]; then
-  MAP_TO_REMOTE_HOST=true
-  shift
-  REMOTE_HOST="$1"
-  shift
-fi
 
 # Args
 SVC_PORT=${1:-8080}
